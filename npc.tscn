@@ -1,14 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://ctyl2o11sdprm"]
 
 [ext_resource type="Script" uid="uid://ctph00gmmkkp5" path="res://npc.gd" id="1_kh24r"]
-[ext_resource type="Texture2D" uid="uid://5fidyiortbm7" path="res://dialog-box.png" id="1_xxcha"]
-[ext_resource type="FontFile" uid="uid://dtsr8lx6sj2bq" path="res://PixelatedEleganceRegular-ovyAA.ttf" id="2_kh24r"]
+[ext_resource type="Texture2D" uid="uid://sfhgh1sdk7su" path="res://e_prompt.png" id="2_xxcha"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v7lw1"]
 radius = 5.0
 height = 14.0
 
+[sub_resource type="Curve2D" id="Curve2D_kh24r"]
+bake_interval = 0.01
+_data = {
+"points": PackedVector2Array(0, 0, 0, -6, 0, 0, 0, 0, 0, -12, 0, -6, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
+
 [node name="npc" type="StaticBody2D"]
+texture_filter = 1
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_kh24r")
@@ -36,21 +43,15 @@ target_position = Vector2(6.70103, 0)
 scale = Vector2(5.37392, 0.96795)
 target_position = Vector2(0, -22)
 
-[node name="dialog-box" type="Node" parent="."]
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(0, -8)
+curve = SubResource("Curve2D_kh24r")
 
-[node name="Sprite2D" type="Sprite2D" parent="dialog-box"]
-visible = false
-texture_filter = 1
-position = Vector2(1, -16)
-scale = Vector2(2.5, 1.5)
-texture = ExtResource("1_xxcha")
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+rotation = -1.5708
+rotates = false
 
-[node name="Label" type="Label" parent="dialog-box/Sprite2D"]
+[node name="E" type="Sprite2D" parent="Path2D/PathFollow2D"]
 texture_filter = 1
-offset_left = -30.0
-offset_top = -5.33333
-offset_right = 44.0
-offset_bottom = 5.66667
-theme_override_fonts/font = ExtResource("2_kh24r")
-theme_override_font_sizes/font_size = 9
-text = "Sample text"
+rotation = 1.5708
+texture = ExtResource("2_xxcha")
